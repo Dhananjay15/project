@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/liver.css"></style>
+    <title>Document</title>
+</head>
+<body>
+    <div class="nav">
+        <div class="topic">
+            <h3><a href="../template/health.html">HealthBag</a></h3>
+        </div>
+        <div class="links" id="link">
+            <a href="../template/heart.html">Heart Disease</a>
+            <a href="../template/liver.html">Liver Disease</a>
+            <a href="../template/covid.html">Covid</a>
+            <a href="../template/diabetes.html">Diabetes</a>
+        </div>
+        <i class="fa-solid fa-bars" id="menu-btn" ></i>
+        
+    </div>
+    <div class="head">
+        <h3>Know Your Chances Of Getting A Liver Disease In One Click</h3>
+    </div>
+    <div class="bigbox">
+
+    
+        <div class="formheart">
+            <img src="../images/formkidney.jpg">
+        </div>
+    <div class="options">
+       <form id="form" >
+        <div class="input-box1">
+            <label for="Gender">Gender</label>
+            <div class="opt">
+                <label for="Male">Male</label>
+                <input type="radio" name="Gender" value="1">
+            
+                <label for="Female">Female</label>
+                <input type="radio" name="Gender" value="0" >
+            </div>
+        </div>
+        <br>
+        <div class="input-box">
+            <label for="Age">Age</label>
+            <br>
+            <input type="number" placeholder="Age" name="Age" min="1" max="20000" step="1">
+
+            
+        </div>
+        <br/>
+        <div class="input-box">
+            <label for="Total_Bilirubin">Total Bilirubin</label>
+            <br>
+            <input type="number" placeholder="cp" name="Total_Bilirubin" min="10" max="20000" step="0.01">
+        </div>
+        <br>
+        <div class="input-box">
+            <label for="Alkaline_Phosphotase">Alkaline Phosphotase</label>
+            <br>
+            <input type="number" name="Alkaline_Phosphotase" placeholder="Alkaline Phosphotase"  min="1" max="20000" step="0.01">
+        </div>
+        <br>
+        <div class="input-box">
+            <label for="Alamine_Aminotransferase">Alamine_Aminotransferase</label>
+            <br>
+            <input type="number" name="Alamine_Aminotransferase" placeholder="Alamine_Aminotransferase"  min="1" max="20000" step="0.01">
+            
+        </div>
+        <br>
+        <div class="input-box">
+            <label for="Albumin_and_Globulin_Ratio">Albumin_and_Globulin_Ratio</label>
+            <br>
+            <input type="number" name="Albumin_and_Globulin_Ratio" placeholder="Albumin_and_Globulin_Ratio"  min="1" max="20000" step="0.01">
+
+        </div>
+        <br>
+        
+    
+       
+        <button type="submit" id="btn">Submit</button>  
+      </div>
+    </form>
+    </div>
+    <div class="footer-container">
+
+    </div> 
+    <div class="result" style="text-align: center;">
+        <!-- <h3>Result:</h3> -->
+        <button id="result_ok" class="result_ok">Ok</button>
+        <!-- <h1>Your ddddddd</h1> -->
+    </div>
+    
+    <script>
+        
+    async function postFormDataAsJson({ url, formData }) {
+ const plainFormData = Object.fromEntries(formData.entries());
+ console.log(plainFormData);
+ const formDataJsonString = JSON.stringify(plainFormData);
+ const fetchOptions = {
+     mode:"cors",
+     method: "POST",
+     headers: {
+         "accept": "application/json",
+         "Content-Type": "application/json"
+     },
+     body: formDataJsonString
+ };
+
+ const response = await fetch(url, fetchOptions);
+
+ if (!response.ok) {
+     const errorMessage = await response.text();
+     throw new Error(errorMessage);
+ }
+
+ return response.json();
+}
+
+async function handleFormSubmit(event) {
+ event.preventDefault();
+
+ const form = event.currentTarget;
+ const url = "https://liverapi.onrender.com/predict_liver";
+
+ try {
+     const formData = new FormData(form);
+     const responseData = await postFormDataAsJson({ url, formData });
+     var result = document.querySelector(".result");
+    
+        result.innerHTML += `<h1>${responseData.prediction}</h1>`;
+        var result_button = document.querySelector(".result_ok");
+        result.style.display = "flex";
+        result_button.addEventListener("click", function(){
+       // console.log("sudhanshu");
+       result.style.display = "none";
+       window.location.reload();
+
+    })
+     console.log({ responseData });
+ } catch (error) {
+     console.error(error);
+ }
+}
+
+const Form = document.getElementById("form");
+Form.addEventListener("submit", handleFormSubmit);
+    
+    </script>
+</body>
+</html>

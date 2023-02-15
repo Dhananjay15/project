@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/heart.css">
+    <title>Heart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <div class="topic">
+                <h3><a href="../template/health.html">HealthBag</a></h3>
+            </div>
+            <div class="links" id="link">
+                <a href="#">Heart Disease</a>
+                <a href="../template/liver.html">Liver Disease</a>
+                <a href="../template/covid.html">Covid</a>
+                <a href="../template/diabetes.html">Diabetes</a>
+            </div>
+            <i class="fa-solid fa-bars" id="menu-btn" ></i>
+            
+        </div>
+        <div class="head">
+            <h3>Know Your Chances Of Getting A Heart Disease In One Click</h3>
+        </div>
+        <div class="bigbox">
+
+            
+            <div class="formheart">
+                <img src="../images/FORMHEART.jpg">
+            </div>
+            <div class="options">
+                
+            <form id="form">
+                <div class="input-box1">
+                    <label for="sex">sex</label>
+                    <div class="opt">
+                        <label for="Male">Male</label>
+                        <input type="radio" name="sex" value="1">
+                    
+                        <label for="Female">Female</label>
+                        <input type="radio" name="sex" value="0" >
+                    </div>
+                </div>
+                <br>
+                <div class="input-box">
+                    <label for="age">age</label>
+                    <br>
+                    <input type="number" placeholder="Age" name="age" min="1" max="20000" step="1" required>
+
+                    
+                </div>
+                <br/>
+                <div class="input-box">
+                    <label for="cp">cp</label>
+                    <br>
+                    <input type="number" placeholder="cp" name="cp" min="10" max="20000" step="1" required>
+                </div>
+                <br>
+                <div class="input-box">
+                    <label for="trestbps">trestbps</label>
+                    <br>
+                    <input type="number" name="trestbps" placeholder="trestbps"  min="1" max="20000" step="1" required>
+                </div>
+                <br>
+                <div class="input-box">
+                    <label for="chol">chol</label>
+                    <br>
+                    <input type="number" name="chol" placeholder="chol"  min="1" max="20000" step="1" required>
+                    
+                </div>
+                <br>
+                <div class="input-box">
+                    <label for="fbs">fbs</label>
+                    <br>
+                    <input type="number" name="fbs" placeholder="fbs"  min="1" max="20000" step="1" required>
+
+                </div>
+                <br>
+                <div class="input-box">
+                    
+                    <label for="restecg">restecg</label>
+                    <br>
+                    <input type="number" name="restecg" placeholder="restecg"  min="1" max="1000" required>
+                    <br>
+                </div> 
+                <br>
+                <div class="input-box">
+                    
+                    <label for="thalach">thalach</label>
+                    <br>
+                    <input type="number" name="thalach" placeholder="thalach"  min="1" max="1000" required>
+                    <br>
+                </div> 
+                <br>
+
+                <div class="input-box">
+                    
+                    <label for="exang">exang</label>
+                    <br>
+                    <input type="number" name="exang" placeholder="exang"  min="1" max="1000" required>
+                    <br>
+                </div> 
+                <br>
+                <div class="input-box">
+                    
+                    <label for="oldpeak">oldpeak</label>
+                    <br>
+                    <input type="number" name="oldpeak" placeholder="oldpeak" step="0.01"  min="1" max="1000" required >
+                    <br>
+                </div> 
+                <br>
+
+                <div class="input-box">
+                    
+                    <label for="slope">slope</label>
+                    <br>
+                    <input type="number" name="slope" placeholder="slope"   min="1" max="1000" required>
+                    <br>
+                </div> 
+                <br>
+                <div class="input-box">
+                    
+                    <label for="ca">ca</label>
+                    <br>
+                    <input type="number" name="ca" placeholder="ca"   min="1" max="1000" required>
+                    <br>
+                </div> 
+                <br>
+                <div class="input-box">
+                    
+                    <label for="thal">thal</label>
+                    <br>
+                    <input type="number" name="thal" placeholder="thal"   min="1" max="1000" required>
+                    <br>
+                </div> 
+                <br>
+
+            
+            
+            <button type="Submit">Submit</button>
+            </div>
+            </form>
+        </div>
+        <!-- <div class="result" style="text-align: center;"></div>  -->
+
+        <div class="footer-container">
+
+        
+        </div>
+        <div class="result" style="text-align: center;">
+            <!-- <h3>Result:</h3> -->
+            <button id="result_ok" class="result_ok">Ok</button>
+            <!-- <h1>Your ddddddd</h1> -->
+        </div>
+
+    </div>
+    <script>
+//         let menu=document.getElementById('menu-btn')
+//   let link=document.getElementById('link')
+//      menu.addEventListener('click',()=>{
+//         if(menu.style.fontSize==="2.8rem"){
+//             menu.classList.add("fa-xmark")
+//             menu.classList.remove("fa-bars")
+//             menu.style.fontSize='2.7rem'
+//             link.style.right="2rem"
+//         }else{
+//             menu.classList.add("fa-bars")
+//         menu.classList.remove("fa-xmark")
+//         menu.style.fontSize='2.8rem'
+//         link.style.right="-100rem"
+//         }
+       
+//      })
+     async function postFormDataAsJson({ url, formData }) {
+ const plainFormData = Object.fromEntries(formData.entries());
+ console.log(plainFormData);
+ const formDataJsonString = JSON.stringify(plainFormData);
+ const fetchOptions = {
+     mode:"cors",
+     method: "POST",
+     headers: {
+         "accept": "application/json",
+         "Content-Type": "application/json"
+     },
+     body: formDataJsonString
+ };
+
+ const response = await fetch(url, fetchOptions);
+
+ if (!response.ok) {
+     const errorMessage = await response.text();
+     throw new Error(errorMessage);
+ }
+
+ return response.json();
+}
+
+async function handleFormSubmit(event) {
+ event.preventDefault();
+
+ const form = event.currentTarget;
+ const url = "https://heartapi.onrender.com/predict_heart";
+
+ try {
+     const formData = new FormData(form);
+     const responseData = await postFormDataAsJson({ url, formData });
+     var result = document.querySelector(".result");
+    
+     result.innerHTML += `<h1>${responseData.prediction}</h1>`;
+     var result_button = document.querySelector(".result_ok");
+     result.style.display = "flex";
+     result_button.addEventListener("click", function(){
+        // console.log("sudhanshu");
+        result.style.display = "none";
+        window.location.reload();
+
+     })
+     console.log({ responseData });
+ } catch (error) {
+     console.error(error);
+ }
+}
+
+const Form = document.getElementById("form");
+Form.addEventListener("submit", handleFormSubmit);
+    
+    </script>
+</body>
+</html>

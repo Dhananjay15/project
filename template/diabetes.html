@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/diabetes.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+
+</head>
+<body>
+    <div class="container">
+    <div class="nav">
+        <div class="topic">
+            <a href="../template/health.html">HealthBag</a>
+        </div>
+        <div class="links">
+            <a href="./heart.html" id="h">Heart Disease</a>
+            <a href="./liver.html"  id="l">Liver Disease</a>
+            <a href="./covid.html"  id="c">Covid</a>
+            <a href="./diabetes.html"  id="d">Diabetes</a>
+        </div>
+        <div id="menu-btn" class="fas fa-bars"></div>
+    </div>
+    <div class="head">
+        <h3>Know Your Chances Of Getting Diabetes In One Click</h3>
+    </div>
+    <div class="bigbox">
+        <div class="diabetesphoto">
+            <img src="../images/WhatsApp Image 2023-02-15 at 12.28.41.jpeg">
+        </div>
+        <div class="options">
+        
+            <form id ='form'>
+                <div class="input-box">
+                    <label for="Pregnancies">Pregnancies</label>
+                    <br>
+                    <input type="number" name="Pregnancies" placeholder="Blood Pressure" min="1" max="1000" >
+                </div>
+                <br>
+                <div class="input-box">
+                    <label for="Glucose">Glucose</label>
+                    <br>
+                    <input type="number" name="Glucose" placeholder="Glucose" min="1" max="1000" >
+                </div>
+                <br>
+                <div class="input-box">
+                    <label for="BloodPressure">BloodPressure</label>
+                    <br>
+                    <input type="number" name="BloodPressure" placeholder="Blood Pressure" min="1" max="1000" >
+                </div>
+                <br>
+                <div class="input-box">
+                    <label for="SkinThickness">SkinThickness</label>
+                    <br>
+                    <input type="number" name="SkinThickness" placeholder="Skin Thickness" min="1" max="1000" >
+                </div>
+                <br>
+                <div class="input-box">
+                    <label for="Insulin">Insulin</label>
+                    <br>
+                    <input type="number" name="Insulin" placeholder="Insulin" min="1" max="1000" >
+                </div>
+                <br>
+                <div class="input-box">
+                
+                    <label for="BMI">BMI</label>
+                    <br>
+                    <input type="number" name="BMI" placeholder="Body Mass Index" min="1" step="0.01" max="1000">
+        
+                </div>
+                <br>
+                <div class="input-box">
+                    <label for="DiabetesPedigreeFunction">DiabetesPedigreeFunction</label>
+                    <br>
+                    <input type="number" name="DiabetesPedigreeFunction" placeholder="Diabetes Pedigree Function" min="1" step="0.01" max="1000" >
+                </div>
+                    <br>
+                    <div class="input-box">
+                        <label for="Age">Age</label>
+                        <br>
+                        <input type="number" name="Age" placeholder="Age" min="1" max="1000" >
+                    </div>
+                    <br>
+                    <button type="Submit">Submit</button>
+            </div>
+            
+            </form>
+            
+        </div>
+    </div>
+    <div class="footer-container">
+       
+       
+    </div> 
+    <div class="result" style="text-align: center;">
+        <!-- <h3>Result:</h3> -->
+        <button id="result_ok" class="result_ok">Ok</button>
+        <!-- <h1>Your ddddddd</h1> -->
+    </div>
+
+</div>
+    
+</body>
+<script>
+    async function postFormDataAsJson({ url, formData }) {
+     const plainFormData = Object.fromEntries(formData.entries());
+     const formDataJsonString = JSON.stringify(plainFormData);
+     const fetchOptions = {
+         mode:"cors",
+         method: "POST",
+         headers: {
+             "accept": "application/json",
+             "Content-Type": "application/json"
+         },
+         body: formDataJsonString
+     };
+ 
+     const response = await fetch(url, fetchOptions);
+ 
+     if (!response.ok) {
+         const errorMessage = await response.text();
+         throw new Error(errorMessage);
+     }
+ 
+     return response.json();
+ }
+ 
+ async function handleFormSubmit(event) {
+     event.preventDefault();
+ 
+     const form = event.currentTarget;
+     const url = "https://diabetesapi.azurewebsites.net/predict_diabetes";
+ 
+     try {
+         const formData = new FormData(form);
+         const responseData = await postFormDataAsJson({ url, formData });
+         var result = document.querySelector(".result");
+    
+        result.innerHTML += `<h1>${responseData.prediction}</h1>`;
+        var result_button = document.querySelector(".result_ok");
+        result.style.display = "flex";
+        result_button.addEventListener("click", function(){
+       // console.log("sudhanshu");
+       result.style.display = "none";
+       window.location.reload();
+
+    })
+         console.log({ responseData });
+     } catch (error) {
+         console.error(error);
+     }
+ }
+ 
+ const Form = document.getElementById("form");
+ Form.addEventListener("submit", handleFormSubmit);
+ 
+ </script>
+</html>
